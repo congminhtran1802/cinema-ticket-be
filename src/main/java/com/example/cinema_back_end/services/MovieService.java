@@ -1,5 +1,6 @@
 package com.example.cinema_back_end.services;
 
+
 import com.example.cinema_back_end.dtos.MovieDTO;
 import com.example.cinema_back_end.entities.Movie;
 import com.example.cinema_back_end.repositories.IMovieRepository;
@@ -37,4 +38,25 @@ public class MovieService implements IMovieService{
                 .stream().map(movie -> modelMapper.map(movie,MovieDTO.class))
                 .collect(Collectors.toList());
     }
+
+	@Override
+	public Movie save(Movie movie) {
+		try {
+			Movie temp = movieRepository.save(movie);
+			movieRepository.flush();
+			System.out.println(temp);
+	        // Chuyển đổi từ Movie sang MovieDTO và trả về
+	        return temp;
+	    } catch (Exception e) {
+	        // Xử lý ngoại lệ nếu có
+	        // Có thể log lỗi hoặc thực hiện các hành động khác tùy thuộc vào yêu cầu
+	        e.printStackTrace();
+	        return null; // hoặc bạn có thể ném ra một ngoại lệ hoặc trả về thông báo lỗi khác
+	    }
+	}
+
+	@Override
+	public void delete(int id) {
+		movieRepository.deleteById(id);
+	}
 }

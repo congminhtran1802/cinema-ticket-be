@@ -36,8 +36,25 @@ public class MovieApi {
         return movieService.findAllShowingMoviesByName(name);
     }
 
-    @PostMapping
-    public void updateMovie(@RequestBody Movie movie){
-        movieRepository.save(movie);
+    @PostMapping("add")
+    public void addMovie(@RequestBody Movie movie){
+    	movieService.save(movie);
+    }
+    
+ // Update an existing movie
+    @PutMapping("/{id}")
+    public Movie updateMovie(@PathVariable int id, @RequestBody Movie updatedMovie) {
+        updatedMovie.setId(id);
+        if(updatedMovie.getIsShowing()!=1) {
+        	updatedMovie.setIsShowing(1);
+        }
+        return movieService.save(updatedMovie);
+    }
+
+    // Delete a movie
+    @DeleteMapping("/{id}")
+    public void deleteMovie(@PathVariable int id) {
+    	System.out.println(id);
+    	movieService.delete(id);
     }
 }

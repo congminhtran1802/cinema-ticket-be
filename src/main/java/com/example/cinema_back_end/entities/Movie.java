@@ -34,4 +34,6 @@ public class Movie {
     private String language;
     private String rated;
     private int isShowing;
+    
+    
 }
